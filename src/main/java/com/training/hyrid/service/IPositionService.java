@@ -8,7 +8,7 @@ public interface IPositionService {
 
     public List<Position> listAllPosition();
 
-    void save(Position position);
+    Position save(Position position);
 
     Position get(Integer id);
 

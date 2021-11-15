@@ -1,16 +1,18 @@
 package com.training.hyrid.dto;
 
 import com.training.hyrid.entities.Position;
+import lombok.Data;
 
 import java.sql.Timestamp;
 
+@Data
 public class PositionDTO {
     private Integer PositionId;
     private String positionName;
     private String description;
     private Timestamp createdAt;
     private Timestamp updateAt;
-
+/*
     public PositionDTO(){
 
     }
@@ -78,5 +80,5 @@ public class PositionDTO {
                 ", createdAt=" + createdAt +
                 ", updateAt=" + updateAt +
                 '}';
-    }
+    }*/
 }

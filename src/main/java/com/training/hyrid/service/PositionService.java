@@ -25,8 +25,8 @@ public class PositionService implements IPositionService{
         return (List<Position>) iPositionDAO.findAll();
     }
 
-    public void save(Position position){
-        iPositionDAO.save(position);
+    public Position save(Position position){
+        return iPositionDAO.save(position);
     }
 
     public Position get(Integer id){
