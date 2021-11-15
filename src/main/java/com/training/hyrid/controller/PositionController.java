@@ -1,6 +1,7 @@
 package com.training.hyrid.controller;
 
 import com.training.hyrid.dto.PositionDTO;
+import com.training.hyrid.dto.RoleDTO;
 import com.training.hyrid.entities.Position;
 import com.training.hyrid.service.PositionService;
 import org.modelmapper.ModelMapper;
@@ -30,12 +31,14 @@ public class PositionController {
     }
 
     @GetMapping("/positions/{id}")
-    public ResponseEntity<Position> getPositionById(@PathVariable Integer id){
+    public ResponseEntity<PositionDTO> getPositionById(@PathVariable Integer id){
         try {
             Position position = positionService.get(id);
-            return new ResponseEntity<Position>(position, HttpStatus.OK);
+            //convert entity to DTO
+            PositionDTO positionResponse = modelMapper.map(position,PositionDTO.class);
+            return ResponseEntity.ok().body(positionResponse);
         } catch (NoSuchElementException e){
-            return new ResponseEntity<Position>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
