@@ -20,8 +20,8 @@ public class RoleService implements IRoleService{
     }
 
     @Override
-    public void save(Role role) {
-        iRoleDAO.save(role);
+    public Role save(Role role) {
+        return iRoleDAO.save(role);
     }
 
     @Override

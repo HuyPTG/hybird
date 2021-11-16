@@ -11,7 +11,7 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", columnDefinition = "INT(11)")
-	private int RoleId;
+	private int roleId;
 
 	@Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(255)")
 	private String fullName;
@@ -35,6 +35,14 @@ public class Role {
 		this.description = description;
 		this.createdAt = createdAt;
 		this.updateAt = updateAt;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getFullName() {
@@ -71,7 +79,7 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return "Role [RoleId=" + RoleId + ", fullName=" + fullName + ", description=" + description + ", createdAt="
+		return "Role [RoleId=" + roleId + ", fullName=" + fullName + ", description=" + description + ", createdAt="
 				+ createdAt + ", updateAt=" + updateAt + "]";
 	}
 
