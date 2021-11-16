@@ -8,7 +8,7 @@ public interface IRoleService {
 
     public List<Role> listAllRole();
 
-    void save(Role role);
+    Role save(Role role);
 
     Role get(Integer id);
 

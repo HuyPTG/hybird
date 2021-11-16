@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 @Data
 public class RoleDTO {
-    private int RoleId;
+    private int roleId;
     private String fullName;
     private String description;
     private Timestamp createdAt;
