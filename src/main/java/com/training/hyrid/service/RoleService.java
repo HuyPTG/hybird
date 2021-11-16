@@ -5,9 +5,11 @@ import com.training.hyrid.entities.Role;
 import com.training.hyrid.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
+@Transactional
 public class RoleService implements IRoleService{
 
     @Autowired
