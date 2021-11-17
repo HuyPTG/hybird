@@ -1,8 +1,11 @@
 package com.training.hyrid.controller;
 
+import com.training.hyrid.dto.RoleDTO;
 import com.training.hyrid.dto.UserDTO;
+import com.training.hyrid.entities.Role;
 import com.training.hyrid.entities.User;
 import com.training.hyrid.exception.ResourceNotFoundException;
+import com.training.hyrid.service.RoleService;
 import com.training.hyrid.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +28,15 @@ import java.util.NoSuchElementException;
 @EnableAutoConfiguration
 @RequestMapping("/api/admin")
 public class UserController {
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     public UserController(UserService userService){
         this.userService = userService;
@@ -68,12 +75,19 @@ public class UserController {
     public ResponseEntity<UserDTO> addRole(@RequestBody UserDTO userDTO) throws NoSuchAlgorithmException {
 
         //DTO to entity
+
+        Role role = new Role();
         User userRequest = modelMapper.map(userDTO,User.class);
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         userRequest.getPassword();
         userRequest.getEmail();
+
+
+
         System.out.println(userRequest.getPassword());
         System.out.println(userRequest.getEmail());
+        System.out.println(userRequest.getRole());
+
         byte[] hash = digest.digest(userRequest.getPassword().getBytes(StandardCharsets.UTF_8));
         String hex = DatatypeConverter.printHexBinary(hash);
         System.out.println(hex);
@@ -85,6 +99,7 @@ public class UserController {
         }*/
         //convert entity to DTO
         User user = userService.save(userRequest);
+
         //entity to DTO
         UserDTO userResponse = modelMapper.map(user,UserDTO.class);
         return new ResponseEntity<UserDTO>(userResponse,HttpStatus.CREATED);

@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/api")
+@RequestMapping("/api/positions")
 public class PositionController {
 
     @Autowired
@@ -25,12 +25,12 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
-    @GetMapping(value = "/positions")
+    @GetMapping(value = "/")
     public List<Position>  list(){
         return positionService.listAllPosition();
     }
 
-    @GetMapping("/positions/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PositionDTO> getPositionById(@PathVariable Integer id){
         try {
             Position position = positionService.get(id);
@@ -42,13 +42,13 @@ public class PositionController {
         }
     }
 
-    @PostMapping("/positions")
+    @PostMapping("/")
     public Position addPosition(@RequestBody Position position){
         positionService.save(position);
         return position;
     }
 
-    @PutMapping("/positions/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<PositionDTO> updatePositionById(@RequestBody PositionDTO positionDTO,
                                                           @PathVariable Integer id){
         //DTO to entity
@@ -59,7 +59,7 @@ public class PositionController {
         return ResponseEntity.ok().body(positionResponse);
     }
 
-    @DeleteMapping("/positions/{id}")
+    @DeleteMapping("/{id}")
     public String deletePositionById(@PathVariable(value = "id") Integer id){
       positionService.delete(id);
       return "Deleted succesully id = " + id;

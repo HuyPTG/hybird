@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/api")
+@RequestMapping("/api/roles")
 public class RoleController {
 
     @Autowired
@@ -27,12 +27,12 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/roles")
+    @GetMapping("/")
     public List<Role> listRole(){
         return roleService.listAllRole();
     }
 
-    @GetMapping("/roles/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<RoleDTO> getRoleById(@PathVariable(name = "id") Integer id){
         try{
             Role role = roleService.get(id);
@@ -44,7 +44,7 @@ public class RoleController {
         }
     }
 
-    @PostMapping("/roles")
+    @PostMapping("/")
     public ResponseEntity<RoleDTO> addRole(@RequestBody RoleDTO roleDTO){
 
         //DTO to entity
@@ -56,7 +56,7 @@ public class RoleController {
         return new ResponseEntity<RoleDTO>(roleResponse,HttpStatus.CREATED);
     }
 
-    @PutMapping("/roles/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<RoleDTO> updateRoleById(@RequestBody RoleDTO roleDTO,
                                                           @PathVariable Integer id){
         //DTO to entity
@@ -67,7 +67,7 @@ public class RoleController {
         return ResponseEntity.ok().body(roleResponse);
     }
 
-    @DeleteMapping("/roles/{id}")
+    @DeleteMapping("/{id}")
     public String deleteRoleById(@PathVariable(value = "id") Integer id){
         roleService.delete(id);
         return "Deleted succesully id = " + id;

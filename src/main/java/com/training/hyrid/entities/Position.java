@@ -48,12 +48,6 @@ public class Position implements Serializable{
 		this.updateAt = updateAt;
 	}
 
-/*	public Position(PositionDTO positionDTO){
-		this.positionName = positionDTO.getPositionName();
-		this.description = positionDTO.getDescription();
-		this.createdAt = positionDTO.getCreatedAt();
-		this.updateAt = positionDTO.getUpdateAt();
-	}*/
 
 	public Integer getPositionId() {
 		return PositionId;

@@ -1,6 +1,7 @@
 package com.training.hyrid.service;
 
 import com.training.hyrid.dao.IRoleDAO;
+import com.training.hyrid.entities.Position;
 import com.training.hyrid.entities.Role;
 import com.training.hyrid.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class RoleService implements IRoleService{
 
     @Override
     public List<Role> listAllRole() {
-        return iRoleDAO.findAll();
+        return (List<Role>) iRoleDAO.findAll();
     }
 
     @Override

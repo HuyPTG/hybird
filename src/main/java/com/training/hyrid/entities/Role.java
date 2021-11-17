@@ -8,10 +8,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "role")
 public class Role {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", columnDefinition = "INT(11)")
-	private int roleId;
+	private Integer roleId;
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "role")
+	private User user;
 
 	@Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(255)")
 	private String fullName;
@@ -37,11 +41,11 @@ public class Role {
 		this.updateAt = updateAt;
 	}
 
-	public int getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(int roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 
@@ -77,10 +81,16 @@ public class Role {
 		this.updateAt = updateAt;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Role [RoleId=" + roleId + ", fullName=" + fullName + ", description=" + description + ", createdAt="
-				+ createdAt + ", updateAt=" + updateAt + "]";
+		return "Role{" +
+				"roleId=" + roleId +
+				", fullName='" + fullName + '\'' +
+				", description='" + description + '\'' +
+				", createdAt=" + createdAt +
+				", updateAt=" + updateAt +
+				'}';
 	}
-
 }

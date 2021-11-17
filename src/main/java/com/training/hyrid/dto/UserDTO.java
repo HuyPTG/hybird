@@ -1,12 +1,13 @@
 package com.training.hyrid.dto;
 
+import com.training.hyrid.entities.Role;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
 public class UserDTO {
-    private Integer Userid;
+    private Integer userId;
     private boolean statusUserAccount;
     private String email;
     private String password;
