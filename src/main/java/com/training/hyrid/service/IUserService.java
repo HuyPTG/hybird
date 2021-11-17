@@ -8,10 +8,15 @@ import java.util.List;
 public interface IUserService {
     public List<User> listAllUser();
 
-    User save(User user);
+    User saveUser(User user);
 
-    User get(Integer id);
+    Role saveRole(Role role);
 
-    void delete(Integer id);
+    void addRoleToUser(String email,String roleName );
+
+    User getUserByEmail(String email);
+
+    User getUserById(Integer id);
+
 
 }

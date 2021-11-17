@@ -50,7 +50,7 @@ public class UserController {
     @GetMapping("/get-user-by-id/{id}")
     public ResponseEntity<UserDTO> getRoleById(@PathVariable(name = "id") Integer id){
         try{
-            User user = userService.get(id);
+            User user = userService.getUserById(id);
             //convert entity to DTO
             UserDTO userResponse = modelMapper.map(user,UserDTO.class);
             return ResponseEntity.ok().body(userResponse);
@@ -86,7 +86,6 @@ public class UserController {
 
         System.out.println(userRequest.getPassword());
         System.out.println(userRequest.getEmail());
-        System.out.println(userRequest.getRole());
 
         byte[] hash = digest.digest(userRequest.getPassword().getBytes(StandardCharsets.UTF_8));
         String hex = DatatypeConverter.printHexBinary(hash);
@@ -98,7 +97,8 @@ public class UserController {
 
         }*/
         //convert entity to DTO
-        User user = userService.save(userRequest);
+        User user = userService.saveUser(userRequest);
+
 
         //entity to DTO
         UserDTO userResponse = modelMapper.map(user,UserDTO.class);

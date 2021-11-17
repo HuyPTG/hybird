@@ -40,7 +40,7 @@ public class RoleService implements IRoleService{
     @Override
     public Role update(Integer id, Role roleRequest) {
         Role role = iRoleDAO.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not exitst with id: " + id));
-        role.setFullName(roleRequest.getFullName());
+        role.setName(roleRequest.getName());
         role.setDescription(roleRequest.getDescription());
         return iRoleDAO.save(role);
     }

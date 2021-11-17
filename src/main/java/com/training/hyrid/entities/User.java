@@ -6,6 +6,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -16,9 +18,13 @@ public class User {
     @Column(name = "id", columnDefinition = "INT(11)")
     private Integer userId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @Column(name = "status", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean statusUserAccount;
@@ -42,8 +48,7 @@ public class User {
 
     }
 
-    public User(Role role, boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt) {
-        this.role = role;
+    public User(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt) {
         this.statusUserAccount = statusUserAccount;
         this.email = email;
         this.password = password;
@@ -108,19 +113,19 @@ public class User {
         this.updateAt = updateAt;
     }
 
-    public Role getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", role=" + role +
+                ", roles=" + roles +
                 ", statusUserAccount=" + statusUserAccount +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

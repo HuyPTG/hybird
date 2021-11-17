@@ -3,6 +3,8 @@ package com.training.hyrid.dto;
 import com.training.hyrid.entities.Role;
 import lombok.Data;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 
 @Data

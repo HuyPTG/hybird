@@ -14,11 +14,9 @@ public class Role {
 	@Column(name = "id", columnDefinition = "INT(11)")
 	private Integer roleId;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "role")
-	private User user;
 
 	@Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(255)")
-	private String fullName;
+	private String name;
 
 	@Column(name = "description", nullable = true, columnDefinition = "NVARCHAR(255)")
 	private String description;
@@ -35,7 +33,7 @@ public class Role {
 
 	public Role(String fullName, String description, Timestamp createdAt, Timestamp updateAt) {
 		super();
-		this.fullName = fullName;
+		this.name = fullName;
 		this.description = description;
 		this.createdAt = createdAt;
 		this.updateAt = updateAt;
@@ -49,13 +47,14 @@ public class Role {
 		this.roleId = roleId;
 	}
 
-	public String getFullName() {
-		return fullName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setName(String name) {
+		this.name = name;
 	}
+
 
 	public String getDescription() {
 		return description;
@@ -87,7 +86,7 @@ public class Role {
 	public String toString() {
 		return "Role{" +
 				"roleId=" + roleId +
-				", fullName='" + fullName + '\'' +
+				", fullName='" + name + '\'' +
 				", description='" + description + '\'' +
 				", createdAt=" + createdAt +
 				", updateAt=" + updateAt +
