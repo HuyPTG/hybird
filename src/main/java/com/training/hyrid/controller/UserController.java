@@ -74,18 +74,15 @@ public class UserController {
     @PostMapping("/create-user")
     public ResponseEntity<UserDTO> addRole(@RequestBody UserDTO userDTO) throws NoSuchAlgorithmException {
 
-        //DTO to entity
 
-        Role role = new Role();
+        //DTO to entity
+        /*Role role = roleService.*/
         User userRequest = modelMapper.map(userDTO,User.class);
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         userRequest.getPassword();
         userRequest.getEmail();
 
-
-
-        System.out.println(userRequest.getPassword());
-        System.out.println(userRequest.getEmail());
+       userService.addRoleToUser(userRequest.getEmail(),userRequest.getPassword());
 
         byte[] hash = digest.digest(userRequest.getPassword().getBytes(StandardCharsets.UTF_8));
         String hex = DatatypeConverter.printHexBinary(hash);
@@ -98,8 +95,6 @@ public class UserController {
         }*/
         //convert entity to DTO
         User user = userService.saveUser(userRequest);
-
-
         //entity to DTO
         UserDTO userResponse = modelMapper.map(user,UserDTO.class);
         return new ResponseEntity<UserDTO>(userResponse,HttpStatus.CREATED);

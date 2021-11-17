@@ -6,6 +6,7 @@ import com.training.hyrid.entities.User;
 import java.util.List;
 
 public interface IUserService {
+
     public List<User> listAllUser();
 
     User saveUser(User user);
