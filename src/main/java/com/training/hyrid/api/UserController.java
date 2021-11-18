@@ -1,18 +1,17 @@
-package com.training.hyrid.controller;
+package com.training.hyrid.api;
 
 import com.training.hyrid.common.ERole;
 import com.training.hyrid.dao.IRoleDAO;
-import com.training.hyrid.dto.RoleDTO;
 import com.training.hyrid.dto.UserDTO;
 import com.training.hyrid.entities.Role;
 import com.training.hyrid.entities.User;
 import com.training.hyrid.exception.ResourceNotFoundException;
+import com.training.hyrid.exception.ResponseMessage;
 import com.training.hyrid.service.RoleService;
 import com.training.hyrid.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.Timestamp;
 import java.util.*;
 
 
@@ -92,9 +90,11 @@ public class UserController {
 /*        roleService.listAllRole();*/
 /*        User userRequest = modelMapper.map(userDTO,User.class);*/
         if(userService.checkExistEmail(userDTO.getEmail())){
-            return ResponseEntity.badRequest().body(new ResourceNotFoundException("This email is already exist"));
+            return ResponseEntity.badRequest().body( new ResponseMessage("The Email is already exist",400L));
         }
-        Set<String> stringRole = userDTO.getRole();
+        /*Set<String> stringRole = userDTO.getRole();*/
+        String stringRole = userDTO.getRole();
+/*        System.out.println(userDTO.getEmail());*/
 /*        Timestamp createAt = userDTO.getCreatedAt();*/
         Set<Role> roles = new HashSet<>();
 
@@ -102,8 +102,8 @@ public class UserController {
             Role userRole = userService.findRoleName(ERole.USER).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
             roles.add(userRole);
         } else {
-            stringRole.forEach(role -> {
-                switch (role){
+
+                switch (stringRole){
                     case "ADMIN" :
                         Role adminRole = userService.findRoleName(ERole.ADMIN).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
                         roles.add(adminRole);
@@ -113,19 +113,23 @@ public class UserController {
                         roles.add(userRole);
                         break;
                     default:
-                        ResponseEntity.ok(new ResourceNotFoundException("Role is not found"));
-                        break;
+                        return ResponseEntity.ok(new ResponseMessage("Please in put exactly Admin or user",400L));
                 }
-            });
-        }
-        User users = new User(roles,userDTO.isStatusUserAccount(),userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()),userDTO.getLoginToken(), userDTO.getCreatedAt(),userDTO.getUpdateAt());
-        users.setRoles(roles);
 
-        //convert entity to DTO
-        User user = userService.saveUser(users);
+        }
+        User users = new User(roles,
+                userDTO.isStatusUserAccount(),
+                userDTO.getEmail(),
+                passwordEncoder.encode(userDTO.getPassword()),
+                userDTO.getLoginToken(),
+                userDTO.getCreatedAt(),
+                userDTO.getUpdateAt());
+        users.setRoles(roles);
+        userService.saveUser(users);
         //entity to DTO
 /*        UserDTO userResponse = modelMapper.map(user,UserDTO.class);*/
-        return ResponseEntity.ok(new ResourceNotFoundException("Succesfully"));
+
+        return ResponseEntity.ok(new ResponseMessage("Succesfully",200L));
     }
 
 }

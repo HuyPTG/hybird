@@ -1,7 +1,6 @@
-package com.training.hyrid.controller;
+package com.training.hyrid.api;
 
 import com.training.hyrid.dto.PositionDTO;
-import com.training.hyrid.dto.RoleDTO;
 import com.training.hyrid.entities.Position;
 import com.training.hyrid.service.PositionService;
 import org.modelmapper.ModelMapper;

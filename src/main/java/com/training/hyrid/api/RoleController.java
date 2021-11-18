@@ -1,10 +1,7 @@
-package com.training.hyrid.controller;
+package com.training.hyrid.api;
 
-import com.training.hyrid.dto.PositionDTO;
 import com.training.hyrid.dto.RoleDTO;
-import com.training.hyrid.entities.Position;
 import com.training.hyrid.entities.Role;
-import com.training.hyrid.service.IRoleService;
 import com.training.hyrid.service.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,9 +17,9 @@ public class UserDTO {
     private String loginToken;
     private Timestamp createdAt;
     private Timestamp updateAt;
-    private Set<String> role;
+    private String role;
 
-    public UserDTO(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt, Set<String> role) {
+    public UserDTO(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt, String role) {
         this.statusUserAccount = statusUserAccount;
         this.email = email;
         this.password = password;
@@ -77,11 +77,11 @@ public class UserDTO {
         this.createdAt = createdAt;
     }
 
-    public Set<String> getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Set<String> role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
