@@ -1,6 +1,8 @@
 package com.training.hyrid.entities;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -10,7 +12,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -18,11 +22,11 @@ public class User {
     @Column(name = "id", columnDefinition = "INT(11)")
     private Integer userId;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles = new HashSet<>();
 
@@ -38,100 +42,25 @@ public class User {
     @Column(name = "login_token",  nullable = false, columnDefinition = "VARCHAR(255)")
     private String loginToken;
 
-    @Column(name = "create_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
 
-    @Column(name = "update_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp updateAt;
 
     public User() {
 
     }
 
-    public User(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt) {
-        this.statusUserAccount = statusUserAccount;
-        this.email = email;
-        this.password = password;
-        this.loginToken = loginToken;
-        this.createdAt = createdAt;
-        this.updateAt = updateAt;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public boolean isStatusUserAccount() {
-        return statusUserAccount;
-    }
-
-    public void setStatusUserAccount(boolean statusUserAccount) {
-        this.statusUserAccount = statusUserAccount;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getLoginToken() {
-        return loginToken;
-    }
-
-    public void setLoginToken(String loginToken) {
-        this.loginToken = loginToken;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Timestamp updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
+    public User(Set<Role> roles, boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt) {
         this.roles = roles;
+        this.statusUserAccount = statusUserAccount;
+        this.email = email;
+        this.password = password;
+        this.loginToken = loginToken;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", roles=" + roles +
-                ", statusUserAccount=" + statusUserAccount +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", loginToken='" + loginToken + '\'' +
-                ", createdAt=" + createdAt +
-                ", updateAt=" + updateAt +
-                '}';
-    }
+
 }

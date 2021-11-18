@@ -1,12 +1,18 @@
 package com.training.hyrid.entities;
 
+import com.training.hyrid.common.ERole;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.sql.Timestamp;
 
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
+@Getter
+@Setter
 public class Role {
 
 	@Id
@@ -14,9 +20,9 @@ public class Role {
 	@Column(name = "id", columnDefinition = "INT(11)")
 	private Integer roleId;
 
-
 	@Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(255)")
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private ERole name;
 
 	@Column(name = "description", nullable = true, columnDefinition = "NVARCHAR(255)")
 	private String description;
@@ -31,65 +37,9 @@ public class Role {
 
 	}
 
-	public Role(String fullName, String description, Timestamp createdAt, Timestamp updateAt) {
-		super();
-		this.name = fullName;
-		this.description = description;
-		this.createdAt = createdAt;
-		this.updateAt = updateAt;
-	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
+	public Role(Integer roleId, ERole name, String description) {
 		this.roleId = roleId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
 		this.name = name;
-	}
-
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Timestamp getUpdateAt() {
-		return updateAt;
-	}
-
-	public void setUpdateAt(Timestamp updateAt) {
-		this.updateAt = updateAt;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Role{" +
-				"roleId=" + roleId +
-				", fullName='" + name + '\'' +
-				", description='" + description + '\'' +
-				", createdAt=" + createdAt +
-				", updateAt=" + updateAt +
-				'}';
 	}
 }

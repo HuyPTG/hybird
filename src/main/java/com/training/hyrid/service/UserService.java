@@ -1,10 +1,10 @@
 package com.training.hyrid.service;
 
+import com.training.hyrid.common.ERole;
 import com.training.hyrid.dao.IRoleDAO;
 import com.training.hyrid.dao.IUserDAO;
 import com.training.hyrid.entities.Role;
 import com.training.hyrid.entities.User;
-import com.training.hyrid.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class UserService implements IUserService{
         return iUserDAO.findAll();
     }
 
-    public User findEmail(String email){
+    public Optional<User> findEmail(String email){
         return  iUserDAO.findByEmail(email);
     }
 
@@ -42,20 +43,23 @@ public class UserService implements IUserService{
 
     @Override
     public Role saveRole(Role role) {
+        log.info("Saving new row {} to the database",role.getName());
         return iRoleDAO.save(role);
     }
 
-    @Override
-    public void addRoleToUser(String email, String roleName) {
-        log.info("Saving new role {} to the database",roleName,email);
-        User user = iUserDAO.findByEmail(email);
-        Role role = iRoleDAO.findByName(roleName);
-        user.getRoles().add(role);
-    }
+
 
     @Override
-    public User getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return iUserDAO.findByEmail(email);
+    }
+
+    public Boolean checkExistEmail(String email){
+        return iUserDAO.existsByEmail(email);
+    }
+
+    public Optional<Role> findRoleName(ERole name) {
+        return iRoleDAO.findOneByName(name);
     }
 
     @Override

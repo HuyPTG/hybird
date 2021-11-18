@@ -1,5 +1,7 @@
 package com.training.hyrid.controller;
 
+import com.training.hyrid.common.ERole;
+import com.training.hyrid.dao.IRoleDAO;
 import com.training.hyrid.dto.RoleDTO;
 import com.training.hyrid.dto.UserDTO;
 import com.training.hyrid.entities.Role;
@@ -10,18 +12,17 @@ import com.training.hyrid.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.DatatypeConverter;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.sql.Timestamp;
+import java.util.*;
 
 
 @Controller
@@ -36,7 +37,16 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
+
+    @Autowired
     private RoleService roleService;
+    private IRoleDAO iRoleDAO;
 
     public UserController(UserService userService){
         this.userService = userService;
@@ -62,7 +72,7 @@ public class UserController {
     @GetMapping("/get-email/{email}")
     public ResponseEntity<UserDTO> getEmail(@PathVariable(name = "email") String email){
         try{
-            User user = userService.findEmail(email);
+            Optional<User> user = userService.findEmail(email);
             //convert entity to DTO
             UserDTO userResponse = modelMapper.map(user,UserDTO.class);
             return ResponseEntity.ok().body(userResponse);
@@ -71,32 +81,51 @@ public class UserController {
         }
     }
 
-    @PostMapping("/create-user")
-    public ResponseEntity<UserDTO> addRole(@RequestBody UserDTO userDTO) throws NoSuchAlgorithmException {
+   /* public ResponseEntity<RoleDTO> getName(String name){
+        Role role = roleService
+    }*/
 
+    @PostMapping("/create-user")
+    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) throws NoSuchAlgorithmException {
 
         //DTO to entity
-        /*Role role = roleService.*/
-        User userRequest = modelMapper.map(userDTO,User.class);
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        userRequest.getPassword();
-        userRequest.getEmail();
+/*        roleService.listAllRole();*/
+/*        User userRequest = modelMapper.map(userDTO,User.class);*/
+        if(userService.checkExistEmail(userDTO.getEmail())){
+            return ResponseEntity.badRequest().body(new ResourceNotFoundException("This email is already exist"));
+        }
+        Set<String> stringRole = userDTO.getRole();
+/*        Timestamp createAt = userDTO.getCreatedAt();*/
+        Set<Role> roles = new HashSet<>();
 
-       userService.addRoleToUser(userRequest.getEmail(),userRequest.getPassword());
-
-        byte[] hash = digest.digest(userRequest.getPassword().getBytes(StandardCharsets.UTF_8));
-        String hex = DatatypeConverter.printHexBinary(hash);
-        System.out.println(hex);
-        userRequest.setPassword(hex);
-        /*if(userRequest.getEmail().equals(userService.findEmail(userService.listAllUser()))){
-            return new ResponseEntity<UserDTO>(HttpStatus.OK);
+        if(stringRole == null){
+            Role userRole = userService.findRoleName(ERole.USER).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
+            roles.add(userRole);
         } else {
+            stringRole.forEach(role -> {
+                switch (role){
+                    case "ADMIN" :
+                        Role adminRole = userService.findRoleName(ERole.ADMIN).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
+                        roles.add(adminRole);
+                        break;
+                    case "USER" :
+                        Role userRole = userService.findRoleName(ERole.USER).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
+                        roles.add(userRole);
+                        break;
+                    default:
+                        ResponseEntity.ok(new ResourceNotFoundException("Role is not found"));
+                        break;
+                }
+            });
+        }
+        User users = new User(roles,userDTO.isStatusUserAccount(),userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()),userDTO.getLoginToken(), userDTO.getCreatedAt(),userDTO.getUpdateAt());
+        users.setRoles(roles);
 
-        }*/
         //convert entity to DTO
-        User user = userService.saveUser(userRequest);
+        User user = userService.saveUser(users);
         //entity to DTO
-        UserDTO userResponse = modelMapper.map(user,UserDTO.class);
-        return new ResponseEntity<UserDTO>(userResponse,HttpStatus.CREATED);
+/*        UserDTO userResponse = modelMapper.map(user,UserDTO.class);*/
+        return ResponseEntity.ok(new ResourceNotFoundException("Succesfully"));
     }
+
 }
