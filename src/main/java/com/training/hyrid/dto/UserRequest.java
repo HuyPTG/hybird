@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 
 @Data
-public class UserDTO {
+public class UserRequest {
     private Integer userId;
     private boolean statusUserAccount;
     private String email;
@@ -19,7 +19,7 @@ public class UserDTO {
     private Timestamp updateAt;
     private String role;
 
-    public UserDTO(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt, String role) {
+    public UserRequest(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt, String role) {
         this.statusUserAccount = statusUserAccount;
         this.email = email;
         this.password = password;

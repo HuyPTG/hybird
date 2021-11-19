@@ -3,7 +3,7 @@ package com.training.hyrid.api;
 
 import com.training.hyrid.common.ERole;
 import com.training.hyrid.dao.IRoleDAO;
-import com.training.hyrid.dto.UserDTO;
+import com.training.hyrid.dto.UserRequest;
 import com.training.hyrid.entities.Role;
 import com.training.hyrid.entities.User;
 import com.training.hyrid.exception.ResourceNotFoundException;
@@ -57,11 +57,11 @@ public class UserController {
     }
 
     @GetMapping("/get-user-by-id/{id}")
-    public ResponseEntity<UserDTO> getRoleById(@PathVariable(name = "id") Integer id){
+    public ResponseEntity<UserRequest> getRoleById(@PathVariable(name = "id") Integer id){
         try{
             User user = userService.getUserById(id);
             //convert entity to DTO
-            UserDTO userResponse = modelMapper.map(user,UserDTO.class);
+            UserRequest userResponse = modelMapper.map(user, UserRequest.class);
             return ResponseEntity.ok().body(userResponse);
         }catch (NoSuchElementException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -69,11 +69,11 @@ public class UserController {
     }
 
     @GetMapping("/get-email/{email}")
-    public ResponseEntity<UserDTO> getEmail(@PathVariable(name = "email") String email){
+    public ResponseEntity<UserRequest> getEmail(@PathVariable(name = "email") String email){
         try{
             Optional<User> user = userService.findEmail(email);
             //convert entity to DTO
-            UserDTO userResponse = modelMapper.map(user,UserDTO.class);
+            UserRequest userResponse = modelMapper.map(user, UserRequest.class);
             return ResponseEntity.ok().body(userResponse);
         }catch (NoSuchElementException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -85,16 +85,16 @@ public class UserController {
     }*/
 
     @PostMapping("/create-user")
-    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) throws NoSuchAlgorithmException {
+    public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest) throws NoSuchAlgorithmException {
 
         //DTO to entity
 /*        roleService.listAllRole();*/
 /*        User userRequest = modelMapper.map(userDTO,User.class);*/
-        if(userService.checkExistEmail(userDTO.getEmail())){
+        if(userService.checkExistEmail(userRequest.getEmail())){
             return ResponseEntity.badRequest().body( new ResponseMessage("Email is already exist",400L));
         }
         /*Set<String> stringRole = userDTO.getRole();*/
-        String stringRole = userDTO.getRole();
+        String stringRole = userRequest.getRole();
 /*        System.out.println(userDTO.getEmail());*/
 /*        Timestamp createAt = userDTO.getCreatedAt();*/
         Set<Role> roles = new HashSet<>();
@@ -119,12 +119,12 @@ public class UserController {
 
         }
         User users = new User(roles,
-                userDTO.isStatusUserAccount(),
-                userDTO.getEmail(),
-                passwordEncoder.encode(userDTO.getPassword()),
-                userDTO.getLoginToken(),
-                userDTO.getCreatedAt(),
-                userDTO.getUpdateAt());
+                userRequest.isStatusUserAccount(),
+                userRequest.getEmail(),
+                passwordEncoder.encode(userRequest.getPassword()),
+                userRequest.getLoginToken(),
+                userRequest.getCreatedAt(),
+                userRequest.getUpdateAt());
         users.setRoles(roles);
         userService.saveUser(users);
         //entity to DTO
