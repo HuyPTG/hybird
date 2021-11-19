@@ -85,5 +85,15 @@ public class UserDTO {
         this.role = role;
     }
 
+	public Timestamp getUpdateAt() {
+		return updateAt;
+	}
+
+	public void setUpdateAt(Timestamp updateAt) {
+		this.updateAt = updateAt;
+	}
+    
+    
+
 
 }

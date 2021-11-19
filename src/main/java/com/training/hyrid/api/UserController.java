@@ -1,5 +1,6 @@
 package com.training.hyrid.api;
 
+
 import com.training.hyrid.common.ERole;
 import com.training.hyrid.dao.IRoleDAO;
 import com.training.hyrid.dto.UserDTO;
@@ -90,7 +91,7 @@ public class UserController {
 /*        roleService.listAllRole();*/
 /*        User userRequest = modelMapper.map(userDTO,User.class);*/
         if(userService.checkExistEmail(userDTO.getEmail())){
-            return ResponseEntity.badRequest().body( new ResponseMessage("The Email is already exist",400L));
+            return ResponseEntity.badRequest().body( new ResponseMessage("Email is already exist",400L));
         }
         /*Set<String> stringRole = userDTO.getRole();*/
         String stringRole = userDTO.getRole();
@@ -113,7 +114,7 @@ public class UserController {
                         roles.add(userRole);
                         break;
                     default:
-                        return ResponseEntity.ok(new ResponseMessage("Please in put exactly Admin or user",400L));
+                        return ResponseEntity.ok(new ResponseMessage("FALSE",400L));
                 }
 
         }
@@ -129,7 +130,7 @@ public class UserController {
         //entity to DTO
 /*        UserDTO userResponse = modelMapper.map(user,UserDTO.class);*/
 
-        return ResponseEntity.ok(new ResponseMessage("Succesfully",200L));
+        return ResponseEntity.ok(new ResponseMessage("SUCCESFULLY",200L));
     }
 
 }

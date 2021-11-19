@@ -43,7 +43,6 @@ public class UserService implements IUserService{
 
     @Override
     public Role saveRole(Role role) {
-        log.info("Saving new row {} to the database",role.getName());
         return iRoleDAO.save(role);
     }
 
