@@ -4,6 +4,7 @@ package com.training.hyrid.api;
 import com.training.hyrid.common.ERole;
 import com.training.hyrid.dao.IRoleDAO;
 import com.training.hyrid.dto.UserRequest;
+import com.training.hyrid.dto.UserResponse;
 import com.training.hyrid.entities.Role;
 import com.training.hyrid.entities.User;
 import com.training.hyrid.exception.ResourceNotFoundException;
@@ -57,11 +58,11 @@ public class UserController {
     }
 
     @GetMapping("/get-user-by-id/{id}")
-    public ResponseEntity<UserRequest> getRoleById(@PathVariable(name = "id") Integer id){
+    public ResponseEntity<UserResponse> getRoleById(@PathVariable(name = "id") Integer id){
         try{
             User user = userService.getUserById(id);
             //convert entity to DTO
-            UserRequest userResponse = modelMapper.map(user, UserRequest.class);
+            UserResponse userResponse = modelMapper.map(user, UserResponse.class);
             return ResponseEntity.ok().body(userResponse);
         }catch (NoSuchElementException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -69,11 +70,11 @@ public class UserController {
     }
 
     @GetMapping("/get-email/{email}")
-    public ResponseEntity<UserRequest> getEmail(@PathVariable(name = "email") String email){
+    public ResponseEntity<UserResponse> getEmail(@PathVariable(name = "email") String email){
         try{
             Optional<User> user = userService.findEmail(email);
             //convert entity to DTO
-            UserRequest userResponse = modelMapper.map(user, UserRequest.class);
+            UserResponse userResponse = modelMapper.map(user, UserResponse.class);
             return ResponseEntity.ok().body(userResponse);
         }catch (NoSuchElementException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
