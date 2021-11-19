@@ -1,5 +1,6 @@
 package com.training.hyrid.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.training.hyrid.entities.Role;
 import lombok.Data;
 
@@ -11,38 +12,30 @@ import java.util.Set;
 @Data
 public class UserRequest {
     private Integer userId;
-    private boolean statusUserAccount;
+    private boolean status;
     private String email;
     private String password;
     private String loginToken;
     private Timestamp createdAt;
-    private Timestamp updateAt;
-    private String role;
+    private Timestamp updatedAt;
+    private Set<String> role;
 
-    public UserRequest(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt, String role) {
-        this.statusUserAccount = statusUserAccount;
+    public UserRequest(boolean status, String email, String password, String loginToken, Timestamp createdAt, Timestamp updatedAt, Set<String> role) {
+        this.status = status;
         this.email = email;
         this.password = password;
         this.loginToken = loginToken;
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
         this.role = role;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public boolean isStatusUserAccount() {
-        return statusUserAccount;
-    }
-
-    public void setStatusUserAccount(boolean statusUserAccount) {
-        this.statusUserAccount = statusUserAccount;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getEmail() {
@@ -61,39 +54,40 @@ public class UserRequest {
         this.password = password;
     }
 
+
     public String getLoginToken() {
         return loginToken;
     }
 
+    @JsonProperty("login_token")
     public void setLoginToken(String loginToken) {
         this.loginToken = loginToken;
     }
 
+    @JsonProperty("created_at")
     public Timestamp getCreatedAt() {
         return createdAt;
     }
 
+    @JsonProperty("created_at")
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+    @JsonProperty("updated_at")
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
 
-    public String getRole() {
+    @JsonProperty("updated_at")
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Set<String> getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Set<String> role) {
         this.role = role;
     }
-
-	public Timestamp getUpdateAt() {
-		return updateAt;
-	}
-
-	public void setUpdateAt(Timestamp updateAt) {
-		this.updateAt = updateAt;
-	}
-    
-    
-
-
 }

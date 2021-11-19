@@ -1,6 +1,7 @@
 package com.training.hyrid.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -31,7 +32,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @Column(name = "status", nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean statusUserAccount;
+    private boolean status;
 
     @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(255)")
     private String email;
@@ -39,38 +40,36 @@ public class User {
     @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
     private String password;
 
-    @Column(name = "login_token",  nullable = false, columnDefinition = "VARCHAR(255)")
+    @Column(name = "login_token", nullable = false, columnDefinition = "VARCHAR(255)")
     private String loginToken;
 
-    @Column(name = "created_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
 
-    @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Timestamp updateAt;
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp updatedAt;
 
     public User() {
 
     }
 
-    public User(Set<Role> roles, boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt) {
+    public User(Set<Role> roles, boolean status, String email, String password, String loginToken, Timestamp createdAt, Timestamp updatedAt) {
         this.roles = roles;
-        this.statusUserAccount = statusUserAccount;
+        this.status = status;
         this.email = email;
         this.password = password;
         this.loginToken = loginToken;
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
     }
 
-	public Set<Role> getRoles() {
+    public Set<Role> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-    
-    
 
 
 }

@@ -89,23 +89,20 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest) throws NoSuchAlgorithmException {
 
         //DTO to entity
-/*        roleService.listAllRole();*/
-/*        User userRequest = modelMapper.map(userDTO,User.class);*/
+
         if(userService.checkExistEmail(userRequest.getEmail())){
             return ResponseEntity.badRequest().body( new ResponseMessage("Email is already exist",400L));
         }
-        /*Set<String> stringRole = userDTO.getRole();*/
-        String stringRole = userRequest.getRole();
-/*        System.out.println(userDTO.getEmail());*/
-/*        Timestamp createAt = userDTO.getCreatedAt();*/
+
+        Set<String> stringRole = userRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if(stringRole == null){
             Role userRole = userService.findRoleName(ERole.USER).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
             roles.add(userRole);
         } else {
-
-                switch (stringRole){
+            stringRole.forEach(role -> {
+                switch (role){
                     case "ADMIN" :
                         Role adminRole = userService.findRoleName(ERole.ADMIN).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
                         roles.add(adminRole);
@@ -115,22 +112,21 @@ public class UserController {
                         roles.add(userRole);
                         break;
                     default:
-                        return ResponseEntity.ok(new ResponseMessage("FALSE",400L));
+                       /* return ResponseEntity.ok(new ResponseMessage("FALSE",400L));*/
+                        break;
                 }
-
+            });
         }
         User users = new User(roles,
-                userRequest.isStatusUserAccount(),
+                userRequest.isStatus(),
                 userRequest.getEmail(),
                 passwordEncoder.encode(userRequest.getPassword()),
                 userRequest.getLoginToken(),
                 userRequest.getCreatedAt(),
-                userRequest.getUpdateAt());
+                userRequest.getUpdatedAt());
         users.setRoles(roles);
         userService.saveUser(users);
         //entity to DTO
-/*        UserDTO userResponse = modelMapper.map(user,UserDTO.class);*/
-
         return ResponseEntity.ok(new ResponseMessage("SUCCESFULLY",200L));
     }
 

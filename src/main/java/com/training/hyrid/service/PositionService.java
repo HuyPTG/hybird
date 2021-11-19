@@ -40,7 +40,7 @@ public class PositionService implements IPositionService{
     @Override
     public Position update(Integer id, Position positionRequest) {
         Position position = iPositionDAO.findById(id).orElseThrow(() -> new ResourceNotFoundException("Position not exist with id: " + id));
-        position.setPositionName(positionRequest.getPositionName());
+        position.setName(positionRequest.getName());
         position.setDescription(positionRequest.getDescription());
         return iPositionDAO.save(position);
     }

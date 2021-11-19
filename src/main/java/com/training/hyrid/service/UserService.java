@@ -46,8 +46,6 @@ public class UserService implements IUserService{
         return iRoleDAO.save(role);
     }
 
-
-
     @Override
     public Optional<User> getUserByEmail(String email) {
         return iUserDAO.findByEmail(email);

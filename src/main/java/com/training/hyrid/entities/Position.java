@@ -8,15 +8,10 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -29,6 +24,9 @@ public class Position implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", columnDefinition = "INT(11)")
 	private Integer PositionId;
+
+	@OneToMany(mappedBy = "position",cascade = CascadeType.ALL)
+	private Set<UserProfile> listUserProfile = new HashSet<>();
 
 	@Column(name = "position_name",  nullable = false, columnDefinition = "VARCHAR(255)")
 	private String name;

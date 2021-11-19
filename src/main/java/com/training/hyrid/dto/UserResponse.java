@@ -1,24 +1,26 @@
 package com.training.hyrid.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Data
 public class UserResponse {
     private Integer userId;
-    private boolean statusUserAccount;
+    private boolean status;
     private String email;
     private String password;
     private String loginToken;
     private Timestamp createdAt;
     private Timestamp updateAt;
-    private String role;
+    private Set<String> role;
 
-    public UserResponse(boolean statusUserAccount, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt, String role) {
-        this.statusUserAccount = statusUserAccount;
+    public UserResponse(boolean status, String email, String password, String loginToken, Timestamp createdAt, Timestamp updateAt, Set<String> role) {
+        this.status = status;
         this.email = email;
         this.password = password;
         this.loginToken = loginToken;
@@ -27,20 +29,12 @@ public class UserResponse {
         this.role = role;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public boolean isStatusUserAccount() {
-        return statusUserAccount;
-    }
-
-    public void setStatusUserAccount(boolean statusUserAccount) {
-        this.statusUserAccount = statusUserAccount;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getEmail() {
@@ -75,14 +69,6 @@ public class UserResponse {
         this.createdAt = createdAt;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public Timestamp getUpdateAt() {
         return updateAt;
     }
@@ -91,6 +77,11 @@ public class UserResponse {
         this.updateAt = updateAt;
     }
 
+    public Set<String> getRole() {
+        return role;
+    }
 
-
+    public void setRole(Set<String> role) {
+        this.role = role;
+    }
 }

@@ -1,14 +1,20 @@
 package com.training.hyrid.entities;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.security.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
+
 
 @Entity
+@Data
+@Getter
+@Setter
 @Table(name = "user_profiles")
 public class UserProfile {
 
@@ -19,17 +25,23 @@ public class UserProfile {
 
     @OneToOne(cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User userId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id", columnDefinition = "INT(11)")
+    private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "position_id", referencedColumnName = "id")
-    private Position positionId;
+    @JoinColumn(name = "position_id", referencedColumnName = "id", columnDefinition = "INT(11)")
+    private Position position;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "branch_id", referencedColumnName = "id", columnDefinition = "INT(11)")
+    private Branch branch;
 
-
- /*   private Branch*/
+    @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
 
     @Column(name = "public_status", columnDefinition = "VARCHAR(255) DEFAULT TRUE")
     private String publicStatus;
@@ -61,9 +73,6 @@ public class UserProfile {
     @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp updateAt;
 
-    public UserProfile() {
-
-    }
 
 
 }
