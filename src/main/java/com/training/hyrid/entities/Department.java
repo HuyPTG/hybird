@@ -1,6 +1,7 @@
 package com.training.hyrid.entities;
 
 import com.training.hyrid.common.ERole;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "department")
+@Data
+@Table(name = "departments")
 public class Department {
 
     @Id
