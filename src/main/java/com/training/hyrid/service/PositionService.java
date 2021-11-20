@@ -29,7 +29,7 @@ public class PositionService implements IPositionService{
         return iPositionDAO.save(position);
     }
 
-    public Position get(Integer id){
+    public Position findPositionById(Integer id){
         return iPositionDAO.findById(id).get();
     }
 

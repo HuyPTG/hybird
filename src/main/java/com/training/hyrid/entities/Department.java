@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/*@Entity
+@Entity
 @Getter
 @Setter
 @Data
@@ -21,8 +21,8 @@ public class Department {
     @Column(name = "id", columnDefinition = "INT(11)")
     private Integer departmentId;
 
-    @OneToMany(mappedBy = "department",cascade = CascadeType.ALL)
-    private Set<UserProfile> listUserProfile = new HashSet<>();
+/*    @OneToMany(mappedBy = "department",cascade = CascadeType.ALL)
+    private Set<UserProfile> listUserProfile = new HashSet<>();*/
 
     @Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String name;
@@ -32,4 +32,4 @@ public class Department {
 
 
 
-}*/
+}

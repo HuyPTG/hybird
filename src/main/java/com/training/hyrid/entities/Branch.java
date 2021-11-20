@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/*
 @Entity
 @Getter
 @Setter
@@ -21,8 +20,8 @@ public class Branch {
     @Column(name = "id", columnDefinition = "INT(11)")
     private Integer branchId;
 
-    @OneToMany(mappedBy = "branch",cascade = CascadeType.ALL)
-    private Set<UserProfile> listUserProfile = new HashSet<>();
+/*    @OneToMany(mappedBy = "branch",cascade = CascadeType.ALL)
+    private Set<UserProfile> listUserProfile = new HashSet<>();*/
 
     @Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(255)")
     private String name;
@@ -30,4 +29,3 @@ public class Branch {
     @Column(name = "description", nullable = true, columnDefinition = "NVARCHAR(255)")
     private String description;
 }
-*/

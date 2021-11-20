@@ -10,7 +10,7 @@ public interface IPositionService {
 
     Position save(Position position);
 
-    Position get(Integer id);
+    Position findPositionById(Integer id);
 
     void delete(Integer id);
 

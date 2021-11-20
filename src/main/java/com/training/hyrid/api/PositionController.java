@@ -32,7 +32,7 @@ public class PositionController {
     @GetMapping("/{id}")
     public ResponseEntity<PositionDTO> getPositionById(@PathVariable Integer id){
         try {
-            Position position = positionService.get(id);
+            Position position = positionService.findPositionById(id);
             //convert entity to DTO
             PositionDTO positionResponse = modelMapper.map(position,PositionDTO.class);
             return ResponseEntity.ok().body(positionResponse);
