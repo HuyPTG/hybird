@@ -3,10 +3,13 @@ package com.training.hyrid.api;
 
 import com.training.hyrid.common.ERole;
 import com.training.hyrid.dao.IRoleDAO;
+import com.training.hyrid.dto.PositionDTO;
 import com.training.hyrid.dto.UserRequest;
 import com.training.hyrid.dto.UserResponse;
+import com.training.hyrid.entities.Position;
 import com.training.hyrid.entities.Role;
 import com.training.hyrid.entities.User;
+import com.training.hyrid.entities.UserProfile;
 import com.training.hyrid.exception.ResourceNotFoundException;
 import com.training.hyrid.exception.ResponseMessage;
 import com.training.hyrid.service.RoleService;
@@ -81,53 +84,14 @@ public class UserController {
         }
     }
 
-   /* public ResponseEntity<RoleDTO> getName(String name){
-        Role role = roleService
-    }*/
-
     @PostMapping("/create-user")
-    public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest) throws NoSuchAlgorithmException {
-
-        //DTO to entity
-
+    public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest){
         if(userService.checkExistEmail(userRequest.getEmail())){
             return ResponseEntity.badRequest().body( new ResponseMessage("Email is already exist",400L));
         }
-
-        Set<String> stringRole = userRequest.getRole();
-        Set<Role> roles = new HashSet<>();
-
-        if(stringRole == null){
-            Role userRole = userService.findRoleName(ERole.USER).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
-            roles.add(userRole);
-        } else {
-            stringRole.forEach(role -> {
-                switch (role){
-                    case "ADMIN" :
-                        Role adminRole = userService.findRoleName(ERole.ADMIN).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
-                        roles.add(adminRole);
-                        break;
-                    case "USER" :
-                        Role userRole = userService.findRoleName(ERole.USER).orElseThrow(() -> new ResourceNotFoundException("Role is not found"));
-                        roles.add(userRole);
-                        break;
-                    default:
-                       /* return ResponseEntity.ok(new ResponseMessage("FALSE",400L));*/
-                        break;
-                }
-            });
-        }
-        User users = new User(roles,
-                userRequest.isStatus(),
-                userRequest.getEmail(),
-                passwordEncoder.encode(userRequest.getPassword()),
-                userRequest.getLoginToken(),
-                userRequest.getCreatedAt(),
-                userRequest.getUpdatedAt());
-        users.setRoles(roles);
-        userService.saveUser(users);
-        //entity to DTO
+        User user = userService.createUser(userRequest);
         return ResponseEntity.ok(new ResponseMessage("SUCCESFULLY",200L));
     }
+
 
 }
