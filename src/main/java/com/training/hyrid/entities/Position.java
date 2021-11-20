@@ -25,8 +25,8 @@ public class Position implements Serializable{
 	@Column(name = "id", columnDefinition = "INT(11)")
 	private Integer PositionId;
 
-	@OneToMany(mappedBy = "position",cascade = CascadeType.ALL)
-	private Set<UserProfile> listUserProfile = new HashSet<>();
+	/*@OneToMany(mappedBy = "position",cascade = CascadeType.ALL)
+	private Set<UserProfile> listUserProfile = new HashSet<>();*/
 
 	@Column(name = "position_name",  nullable = false, columnDefinition = "VARCHAR(255)")
 	private String name;

@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "INT(11)")
-    private Integer userId;
+    private Integer id;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -61,6 +61,14 @@ public class User {
         this.loginToken = loginToken;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public User(Set<Role> roles, boolean status, String email, String password, Timestamp createdAt) {
+        this.roles = roles;
+        this.status = status;
+        this.email = email;
+        this.password = password;
+        this.createdAt = createdAt;
     }
 
     public Set<Role> getRoles() {

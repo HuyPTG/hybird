@@ -45,11 +45,9 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
     @Autowired
     private RoleService roleService;
-    private IRoleDAO iRoleDAO;
+
 
     public UserController(UserService userService){
         this.userService = userService;
@@ -83,15 +81,16 @@ public class UserController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
-
+    /*
+    Create user by check role user or admin to add Database
+     */
     @PostMapping("/create-user")
     public ResponseEntity<?> createUser(@RequestBody UserRequest userRequest){
         if(userService.checkExistEmail(userRequest.getEmail())){
             return ResponseEntity.badRequest().body( new ResponseMessage("Email is already exist",400L));
         }
-        User user = userService.createUser(userRequest);
+        userService.createUser(userRequest);
         return ResponseEntity.ok(new ResponseMessage("SUCCESFULLY",200L));
     }
-
 
 }

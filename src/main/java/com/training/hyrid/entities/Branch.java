@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/*
 @Entity
 @Getter
 @Setter
@@ -29,3 +30,4 @@ public class Branch {
     @Column(name = "description", nullable = true, columnDefinition = "NVARCHAR(255)")
     private String description;
 }
+*/
