@@ -1,4 +1,4 @@
-package com.training.hyrid.dto;
+package com.training.hyrid.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.training.hyrid.entities.Role;

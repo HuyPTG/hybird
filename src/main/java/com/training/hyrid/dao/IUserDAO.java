@@ -13,4 +13,6 @@ public interface IUserDAO extends JpaRepository<User,Integer> {
 
     Boolean existsByEmail(String email);
 
+    User findByToken(String loginToken);
+
 }

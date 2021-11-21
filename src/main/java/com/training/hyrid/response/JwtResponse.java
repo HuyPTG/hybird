@@ -1,4 +1,4 @@
-package com.training.hyrid.dto;
+package com.training.hyrid.response;
 
 import java.util.List;
 

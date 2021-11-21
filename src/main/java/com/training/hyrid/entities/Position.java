@@ -1,15 +1,11 @@
 package com.training.hyrid.entities;
 
 
-import com.training.hyrid.dto.PositionDTO;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.*;
 

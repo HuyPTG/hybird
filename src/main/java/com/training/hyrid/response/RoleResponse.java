@@ -1,14 +1,15 @@
-package com.training.hyrid.dto;
+package com.training.hyrid.response;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
-
 @Data
-public class RoleDTO {
+@Getter
+@Setter
+public class RoleResponse {
     private Integer roleId;
     private String name;
     private String description;
-    private Timestamp createdAt;
-    private Timestamp updateAt;
 }

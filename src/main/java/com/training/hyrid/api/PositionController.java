@@ -1,7 +1,8 @@
 package com.training.hyrid.api;
 
-import com.training.hyrid.dto.PositionDTO;
 import com.training.hyrid.entities.Position;
+import com.training.hyrid.request.PositionRequest;
+import com.training.hyrid.response.PositionResponse;
 import com.training.hyrid.service.PositionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class PositionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PositionDTO> getPositionById(@PathVariable Integer id){
+    public ResponseEntity<PositionResponse> getPositionById(@PathVariable Integer id){
         try {
             Position position = positionService.findPositionById(id);
-            //convert entity to DTO
-            PositionDTO positionResponse = modelMapper.map(position,PositionDTO.class);
+            //convert PositionResponse to DTO
+            PositionResponse positionResponse = modelMapper.map(position,PositionResponse.class);
             return ResponseEntity.ok().body(positionResponse);
         } catch (NoSuchElementException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -48,13 +49,13 @@ public class PositionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PositionDTO> updatePositionById(@RequestBody PositionDTO positionDTO,
-                                                          @PathVariable Integer id){
-        //DTO to entity
-        Position positionRequest = modelMapper.map(positionDTO,Position.class);
-        Position position = positionService.update(id,positionRequest);
-        //entity to DTO
-        PositionDTO positionResponse = modelMapper.map(position,PositionDTO.class);
+    public ResponseEntity<PositionRequest> updatePositionById(@RequestBody PositionRequest positionRequest,
+                                                              @PathVariable Integer id){
+        //PositionRequest to entity
+        Position positionRequestFromClient = modelMapper.map(positionRequest,Position.class);
+        Position position = positionService.update(id,positionRequestFromClient);
+        //entity to PositionResquest
+        PositionRequest positionResponse = modelMapper.map(position,PositionRequest.class);
         return ResponseEntity.ok().body(positionResponse);
     }
 

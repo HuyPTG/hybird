@@ -1,6 +1,5 @@
 package com.training.hyrid.service;
 
-import com.training.hyrid.dto.UserProfileRequest;
 import com.training.hyrid.entities.User;
 import com.training.hyrid.entities.UserProfile;
 
@@ -10,7 +9,6 @@ public interface IUserProfileService {
 
     Optional<User> getUserByEmail(String email);
 
-/*    UserProfile update(UserProfile userProfile);*/
+    UserProfile getUserProfile(Integer id);
 
-    UserProfile get(Integer id);
 }

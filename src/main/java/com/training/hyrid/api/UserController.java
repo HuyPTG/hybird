@@ -1,16 +1,9 @@
 package com.training.hyrid.api;
 
 
-import com.training.hyrid.common.ERole;
-import com.training.hyrid.dao.IRoleDAO;
-import com.training.hyrid.dto.PositionDTO;
-import com.training.hyrid.dto.UserRequest;
-import com.training.hyrid.dto.UserResponse;
-import com.training.hyrid.entities.Position;
-import com.training.hyrid.entities.Role;
+import com.training.hyrid.request.UserRequest;
+import com.training.hyrid.response.UserResponse;
 import com.training.hyrid.entities.User;
-import com.training.hyrid.entities.UserProfile;
-import com.training.hyrid.exception.ResourceNotFoundException;
 import com.training.hyrid.exception.ResponseMessage;
 import com.training.hyrid.service.RoleService;
 import com.training.hyrid.service.UserService;
@@ -24,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 

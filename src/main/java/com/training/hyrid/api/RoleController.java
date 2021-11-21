@@ -1,7 +1,8 @@
 package com.training.hyrid.api;
 
-import com.training.hyrid.dto.RoleDTO;
 import com.training.hyrid.entities.Role;
+import com.training.hyrid.request.RoleRequest;
+import com.training.hyrid.response.RoleResponse;
 import com.training.hyrid.service.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoleDTO> getRoleById(@PathVariable(name = "id") Integer id){
+    public ResponseEntity<RoleResponse> getRoleById(@PathVariable(name = "id") Integer id){
         try{
             Role role = roleService.get(id);
-            //convert entity to DTO
-            RoleDTO roleResponse = modelMapper.map(role,RoleDTO.class);
+            //convert entity to RoleRequest
+            RoleResponse roleResponse = modelMapper.map(role,RoleResponse.class);
             return ResponseEntity.ok().body(roleResponse);
         }catch (NoSuchElementException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -42,25 +43,25 @@ public class RoleController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<RoleDTO> addRole(@RequestBody RoleDTO roleDTO){
+    public ResponseEntity<RoleRequest> addRole(@RequestBody RoleRequest roleRequest){
 
-        //DTO to entity
-        Role roleRequest = modelMapper.map(roleDTO,Role.class);
-        Role role = roleService.save(roleRequest);
-        //entity to DTO
-        RoleDTO roleResponse = modelMapper.map(role,RoleDTO.class);
+        //RoleRequest to entity
+        Role roleRequestFromClient = modelMapper.map(roleRequest,Role.class);
+        Role role = roleService.save(roleRequestFromClient);
+        //entity to RoleRequest
+        RoleRequest roleResponse = modelMapper.map(role,RoleRequest.class);
 
-        return new ResponseEntity<RoleDTO>(roleResponse,HttpStatus.CREATED);
+        return new ResponseEntity<RoleRequest>(roleResponse,HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoleDTO> updateRoleById(@RequestBody RoleDTO roleDTO,
+    public ResponseEntity<RoleRequest> updateRoleById(@RequestBody RoleRequest roleRequest,
                                                           @PathVariable Integer id){
-        //DTO to entity
-        Role roleRequest = modelMapper.map(roleDTO,Role.class);
-        Role role = roleService.update(id,roleRequest);
-        //entity to DTO
-        RoleDTO roleResponse = modelMapper.map(role,RoleDTO.class);
+        //RoleRequest to entity
+        Role roleRequestFromClient = modelMapper.map(roleRequest,Role.class);
+        Role role = roleService.update(id,roleRequestFromClient);
+        //entity to RoleRequest
+        RoleRequest roleResponse = modelMapper.map(role,RoleRequest.class);
         return ResponseEntity.ok().body(roleResponse);
     }
 

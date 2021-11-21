@@ -3,21 +3,18 @@ package com.training.hyrid.service;
 import com.training.hyrid.common.ERole;
 import com.training.hyrid.dao.IRoleDAO;
 import com.training.hyrid.dao.IUserDAO;
-import com.training.hyrid.dto.UserRequest;
+import com.training.hyrid.request.UserRequest;
 import com.training.hyrid.entities.Role;
 import com.training.hyrid.entities.User;
 import com.training.hyrid.exception.ResourceNotFoundException;
-import com.training.hyrid.exception.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -77,6 +74,11 @@ public class UserService implements IUserService{
     @Override
     public User getUserById(Integer id) {
         return iUserDAO.findById(id).get();
+    }
+
+    @Override
+    public User getUserByToken(String loginToken) {
+        return iUserDAO.findByToken(loginToken);
     }
 
     public User createUser(UserRequest userRequest) {

@@ -18,5 +18,7 @@ public interface IUserService {
 
     User getUserById(Integer id);
 
+    User getUserByToken(String loginToken);
+
 
 }

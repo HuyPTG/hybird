@@ -1,4 +1,4 @@
-package com.training.hyrid.dto;
+package com.training.hyrid.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

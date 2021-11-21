@@ -1,4 +1,4 @@
-package com.training.hyrid.dto;
+package com.training.hyrid.request;
 
 import java.sql.Timestamp;
 import java.util.Set;
